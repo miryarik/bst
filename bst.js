@@ -1,9 +1,32 @@
 // import Node from "./node.js";
 
 class Tree {
-
     constructor(arr) {
-        this.root = this.buildTree(arr);
+        // sort the array for tree building
+        let sortedArr = arr.toSorted((a, b) => a - b);
+        this.root = this.buildTree(sortedArr);
+    }
+
+    insert(value, root = this.root) {
+        // where insert on a leaf
+        if (root == null) {
+            return new Node (value);
+        }
+
+        // if value is already in tree return
+        if (root.data == value) return root;
+        
+        // if value < data, we insert in the left subtree
+        if (value < root.data) {
+            root.left = this.insert(value, root.left);
+        }
+        // ow in the right
+        if (value > root.data) {
+            root.right = this.insert(value, root.right);
+        }
+
+        // return the reference so inserted node is not lost
+        return root;
     }
 
     buildTree(arr) {
@@ -24,8 +47,21 @@ class Tree {
     }
 }
 
-let arr = [1,2];
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+    if (node === null) {
+        return;
+    }
+    if (node.right !== null) {
+        prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+        prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+};
+
+let arr = [1, 2, 3, 4, 5, 6, 7, 8];
 
 let tree = new Tree(arr);
 
-console.log(tree);
+console.log(prettyPrint(tree.root));
