@@ -7,6 +7,25 @@ class Tree {
         this.root = this.buildTree(sortedArr);
     }
 
+    height(root = this.root) {
+        // if there is nothing or no children return 0
+        if (root == null || (root.left == null && root.right == null)) return 0;
+
+        let leftHeight = 0;
+        let rightHeight = 0;
+        // if there is a left child return 1 + height of left
+        if (root.left != null) {
+            leftHeight = 1 + this.height(root.left);
+        }
+        // same for right
+        if (root.right != null) {
+            rightHeight = 1 + this.height(root.right);
+        }
+
+        // return the max of two
+        return Math.max(leftHeight, rightHeight);
+    }
+
     postOrder(callback, root = this.root) {
         // return if there is nothing
         // preorder on left child
