@@ -11,7 +11,7 @@ class Tree {
         // in-order traversal return sorted nodes
         let nodes = [];
         this.inOrder((node) => {
-            nodes.push(node.data);  
+            nodes.push(node.data);
         });
 
         // now use this array to build the tree again
@@ -27,14 +27,14 @@ class Tree {
 
         let nodes = [];
         this.levelOrder((node) => {
-            nodes.push(node);  
+            nodes.push(node);
         });
 
-        let result = nodes.every(node => {
+        let result = nodes.every((node) => {
             const leftHeight = this.height(node.left);
             const rightHeight = this.height(node.right);
 
-            return (Math.abs(leftHeight - rightHeight) < 1);
+            return (Math.abs(leftHeight - rightHeight) <= 1);
         });
 
         return result;
@@ -54,8 +54,7 @@ class Tree {
 
             if (node.data < current.data) {
                 current = current.left;
-            }
-            else {
+            } else {
                 current = current.right;
             }
 
@@ -125,15 +124,14 @@ class Tree {
     }
 
     levelOrder(callback) {
-        
         let queue = [this.root];
-        
+
         while (queue[0] != null) {
             // for each node in the queue
             // call on it
             const first = queue.shift();
             callback(first);
-    
+
             // push its left and right children to queue
             if (first.left) queue.push(first.left);
             if (first.right) queue.push(first.right);
@@ -163,7 +161,7 @@ class Tree {
 
         if (child.data == value) {
             // now if the value is found on
-            
+
             // a leaf, remove the parents reference to it
             if (child.right == null && child.left == null) {
                 if (value < parent.data) parent.left = null;
@@ -173,7 +171,7 @@ class Tree {
             // a node with
             // only right child
             else if (child.left == null && child.right != null) {
-                // if value is on right of parent reassign parent.right 
+                // if value is on right of parent reassign parent.right
                 if (value > parent.data) parent.right = child.right;
                 // similar for left
                 else parent.left = child.right;
@@ -181,13 +179,11 @@ class Tree {
 
             // only left child
             else if (child.left != null && child.right == null) {
-                // if value is on right of parent reassign parent.right 
+                // if value is on right of parent reassign parent.right
                 if (value > parent.data) parent.right = child.left;
                 // similar for left
                 else parent.left = child.left;
-            }
-
-            else {
+            } else {
                 // both children
                 // look for the minimum on its right, keep track of its parent
                 let min = child.right;
@@ -195,7 +191,7 @@ class Tree {
                     parent = min;
                     min = min.left;
                 }
-                
+
                 // over targets value with min
                 // delete reference to min
                 let minVal = min.data;
@@ -275,9 +271,3 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
         prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
 };
-
-arr = [1,2,3,4,35,346,7,8,3,768]
-
-let tree = new Tree(arr);
-
-console.log(prettyPrint(tree.root));
