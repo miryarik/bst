@@ -1,3 +1,5 @@
+import Tree from "./bst.js";
+
 function randomNumbersArray(length = 10) {
     return Array.from(Array(length), () => Math.floor(Math.random() * 100) + 1);
 }
@@ -9,14 +11,14 @@ console.log(arr);
 
 let tree = new Tree(arr);
 
-console.log("DONE :")
+console.log("DONE :");
 prettyPrint(tree.root);
 console.log("Tree is balanced : " + tree.isBalanced());
 
 console.log("Imbalancing by inserting");
 while (tree.isBalanced()) {
     let randoms = randomNumbersArray(5);
-    randoms.forEach(random => {
+    randoms.forEach((random) => {
         console.log(random);
         tree.insert(random);
     });
@@ -24,7 +26,6 @@ while (tree.isBalanced()) {
 
 prettyPrint(tree.root);
 console.log("Tree is balanced : " + tree.isBalanced());
-
 
 console.log("REBALANCING");
 tree.balance();
@@ -35,4 +36,3 @@ console.log("Tree is balanced : " + tree.isBalanced());
 // tree.preOrder(console.log)
 // tree.inOrder(console.log)
 // tree.postOrder(console.log)
-

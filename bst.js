@@ -1,6 +1,6 @@
-// import Node from "./node.js";
+import Node from "./node.js";
 
-class Tree {
+export default class Tree {
     constructor(arr) {
         // sort the array for tree building
         let sortedArr = arr.toSorted((a, b) => a - b);
@@ -34,7 +34,7 @@ class Tree {
             const leftHeight = this.height(node.left);
             const rightHeight = this.height(node.right);
 
-            return (Math.abs(leftHeight - rightHeight) <= 1);
+            return Math.abs(leftHeight - rightHeight) <= 1;
         });
 
         return result;
