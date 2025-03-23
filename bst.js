@@ -7,6 +7,28 @@ class Tree {
         this.root = this.buildTree(sortedArr);
     }
 
+    isBalanced() {
+        // get all the nodes
+        // get height for each nodes left and right children
+        // if for any node, the difference between height is more than 1
+        // return false
+        // ow return true
+
+        let nodes = [];
+        this.levelOrder((node) => {
+            nodes.push(node);  
+        });
+
+        let result = nodes.every(node => {
+            const leftHeight = this.height(node.left);
+            const rightHeight = this.height(node.right);
+
+            return (Math.abs(leftHeight - rightHeight) < 1);
+        });
+
+        return result;
+    }
+
     depth(node) {
         // perform a binary search from the top
         // if the node value is smaller than the root
@@ -242,8 +264,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
         prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
 };
-
-let arr = [1, 2, 3, 4, 5, 6, 7, 8, 0, -1, -4, -6];
 
 let tree = new Tree(arr);
 
