@@ -7,6 +7,17 @@ class Tree {
         this.root = this.buildTree(sortedArr);
     }
 
+    balance() {
+        // in-order traversal return sorted nodes
+        let nodes = [];
+        this.inOrder((node) => {
+            nodes.push(node.data);  
+        });
+
+        // now use this array to build the tree again
+        this.root = this.buildTree(nodes);
+    }
+
     isBalanced() {
         // get all the nodes
         // get height for each nodes left and right children
@@ -264,6 +275,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
         prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
 };
+
+arr = [1,2,3,4,35,346,7,8,3,768]
 
 let tree = new Tree(arr);
 
