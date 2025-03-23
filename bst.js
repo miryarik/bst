@@ -7,15 +7,98 @@ class Tree {
         this.root = this.buildTree(sortedArr);
     }
 
+    delete(value) {
+        let parent = this.root;
+        let child = this.root;
+
+        // check if there is only one node
+        if (parent.right == null && parent.left == null) return false;
+
+        // find the target child and its parent
+        while (child != null && child.data != value) {
+            // if value > child => go to right
+            if (value > child.data) {
+                parent = child;
+                child = child.right;
+            }
+            // and left for value < child
+            else {
+                parent = child;
+                child = child.left;
+            }
+        }
+
+        if (child.data == value) {
+            // now if the value is found on
+            
+            // a leaf, remove the parents reference to it
+            if (child.right == null && child.left == null) {
+                if (value < parent.data) parent.left = null;
+                else parent.right = null;
+            }
+
+            // a node with
+            // only right child
+            else if (child.left == null && child.right != null) {
+                // if value is on right of parent reassign parent.right 
+                if (value > parent.data) parent.right = child.right;
+                // similar for left
+                else parent.left = child.right;
+            }
+
+            // only left child
+            else if (child.left != null && child.right == null) {
+                // if value is on right of parent reassign parent.right 
+                if (value > parent.data) parent.right = child.left;
+                // similar for left
+                else parent.left = child.left;
+            }
+
+            else {
+                // both children
+                // look for the minimum on its right, keep track of its parent
+                let min = child.right;
+                while (min.left != null) {
+                    parent = min;
+                    min = min.left;
+                }
+                
+                // over targets value with min
+                // delete reference to min
+                let minVal = min.data;
+                this.delete(minVal);
+                child.data = minVal;
+            }
+        }
+    }
+
+    #search(value, root = this.root) {
+        // binary search
+
+        // there value was not found
+        if (root == null) return null;
+
+        // if target is on root return it
+        if (root.data == value) return root;
+
+        // if root data < value, value is in right subtree
+        if (root.data < value) {
+            return this.#search(value, root.right);
+        } else {
+            // otherwise in left subtree
+            return this.#search(value, root.left);
+        }
+    }
+
     insert(value, root = this.root) {
-        // where insert on a leaf
+        // insert on a leaf
         if (root == null) {
-            return new Node (value);
+            return new Node(value);
         }
 
         // if value is already in tree return
         if (root.data == value) return root;
-        
+
         // if value < data, we insert in the left subtree
         if (value < root.data) {
             root.left = this.insert(value, root.left);
@@ -60,7 +143,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+let arr = [1, 2, 3, 4, 5, 6, 7, 8, 0, -1, -4, -6];
 
 let tree = new Tree(arr);
 
