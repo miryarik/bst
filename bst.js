@@ -7,6 +7,32 @@ class Tree {
         this.root = this.buildTree(sortedArr);
     }
 
+    depth(node) {
+        // perform a binary search from the top
+        // if the node value is smaller than the root
+        // look in the left
+        // if the node value is larger than the root
+        // look in the right
+
+        let current = this.root;
+        let depth = 0;
+        while (current != null && current != node) {
+            // either we find it or it doesnt exist
+
+            if (node.data < current.data) {
+                current = current.left;
+            }
+            else {
+                current = current.right;
+            }
+
+            depth++;
+        }
+
+        if (current == node) return depth;
+        else return 0;
+    }
+
     height(root = this.root) {
         // if there is nothing or no children return 0
         if (root == null || (root.left == null && root.right == null)) return 0;
