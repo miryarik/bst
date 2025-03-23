@@ -72,7 +72,7 @@ class Tree {
         }
     }
 
-    #search(value, root = this.root) {
+    find(value, root = this.root) {
         // binary search
 
         // there value was not found
@@ -83,10 +83,10 @@ class Tree {
 
         // if root data < value, value is in right subtree
         if (root.data < value) {
-            return this.#search(value, root.right);
+            return this.find(value, root.right);
         } else {
             // otherwise in left subtree
-            return this.#search(value, root.left);
+            return this.find(value, root.left);
         }
     }
 
