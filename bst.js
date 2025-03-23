@@ -7,6 +7,61 @@ class Tree {
         this.root = this.buildTree(sortedArr);
     }
 
+    postOrder(callback, root = this.root) {
+        // return if there is nothing
+        // preorder on left child
+        // preorder on right child
+        // process root
+
+        if (root == null) return;
+
+        this.postOrder(callback, root.left);
+        this.postOrder(callback, root.right);
+        callback(root);
+    }
+
+    inOrder(callback, root = this.root) {
+        // return if there is nothing
+        // preorder on left child
+        // process root
+        // preorder on right child
+
+        if (root == null) return;
+
+        this.inOrder(callback, root.left);
+        callback(root);
+        this.inOrder(callback, root.right);
+    }
+
+    preOrder(callback, root = this.root) {
+        // return if there is nothing
+        // process root
+        // preorder on left child
+        // preorder on right child
+
+        if (root == null) return;
+
+        callback(root);
+        this.preOrder(callback, root.left);
+        this.preOrder(callback, root.right);
+    }
+
+    levelOrder(callback) {
+        
+        let queue = [this.root];
+        
+        while (queue[0] != null) {
+            // for each node in the queue
+            // call on it
+            const first = queue.shift();
+            callback(first);
+    
+            // push its left and right children to queue
+            if (first.left) queue.push(first.left);
+            if (first.right) queue.push(first.right);
+        }
+    }
+
     delete(value) {
         let parent = this.root;
         let child = this.root;
